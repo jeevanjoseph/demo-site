@@ -15,7 +15,7 @@ COPY . /site
 WORKDIR /site
 
 # And then we just run Hugo
-RUN /hugo --minify --enableGitInfo
+RUN /hugo --minify
 
 # stage 2
 FROM nginx:1.21.5-alpine as site
