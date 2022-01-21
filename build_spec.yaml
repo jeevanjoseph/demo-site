@@ -37,8 +37,8 @@ steps:
     timeoutInSeconds: 1200
     name: "Build container image"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/node_express
-      docker build --pull --rm -t node-express-getting-started -f DOCKERFILE .
+      cd ${OCI_PRIMARY_SOURCE_DIR}
+      docker build --pull --rm -t demo-hugo-site:latest -f Dockerfile .
     onFailure:
       - type: Command
         command: |
