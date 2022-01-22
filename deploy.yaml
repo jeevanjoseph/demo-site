@@ -1,0 +1,44 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: demo-site
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demosite-deployment
+  namespace: demo-site
+spec:
+  selector:
+    matchLabels:
+      app: demo-site
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: demo-site
+    spec:
+      containers:
+        - name: demo-site
+          # enter the path to your image, be sure to include the correct region prefix
+          image: iad.ocir.io/idi2cuxxbkto/demo-site:${BUILDRUN_HASH}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-site-service
+  namespace: demo-site
+  annotations: 
+    service.beta.kubernetes.io/oci-load-balancer-shape: "10Mbps"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: demo-site
