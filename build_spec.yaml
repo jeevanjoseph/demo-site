@@ -38,7 +38,7 @@ steps:
     name: "Build container image"
     command: |
       cd ${OCI_PRIMARY_SOURCE_DIR}
-      docker build --pull --rm -t demo-hugo-site:latest -f Dockerfile .
+      DOCKER_BUILDKIT=0 docker build -t demo-hugo-site:latest -f Dockerfile .
     onFailure:
       - type: Command
         command: |
