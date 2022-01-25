@@ -1,5 +1,5 @@
 # Hugo Config file
-# addinmg a comment
+# --  addinmg a comment
 baseURL = "/"
 languageCode = "en-us"
 paginate = 6
