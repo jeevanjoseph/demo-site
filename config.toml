@@ -1,3 +1,5 @@
+# Hugo Config file
+#
 baseURL = "/"
 languageCode = "en-us"
 paginate = 6
