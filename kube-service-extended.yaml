@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-service-extended
+  namespace: kube-system
+  labels:
+    app: kube-service-extended 
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "80"
+spec:
+  serviceAccountName: oke-admin
+  containers:
+  - name: nginx
+    image: iad.ocir.io/odx-mockcustomer/johorwi/kube-svc-metrics
+    ports:
+    - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-service-extended
+  namespace: kube-system
+  labels:
+    app: kube-service-extended
+  annotations:
+    alpha.monitoring.coreos.com/non-namespaced: "true"
+spec:
+  ports:
+  - name: http-metrics
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: kube-service-extended
+
+---
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kube-service-extended
+  namespace: monitoring
+  labels:
+    app: kube-service-extended
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: kube-service-extended
+  namespaceSelector:
+    matchNames:
+    - kube-system
+    - monitoring
+  endpoints:
+  - port: http-metrics
