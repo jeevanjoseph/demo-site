@@ -62,7 +62,7 @@ steps:
     name: "Build container image"
     command: |
       cd ${OCI_PRIMARY_SOURCE_DIR}
-      docker build -t ${image_name:${tag} -f Dockerfile .
+      docker build -t ${image_name}:${tag} -f Dockerfile .
     onFailure:
       - type: Command
         command: |
