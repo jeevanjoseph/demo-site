@@ -5,7 +5,8 @@ shell: bash
 env:
   # these are local variables to the build config
   variables:
-    key: "value"
+    image_name: test-image
+    tag: 1.0
   # the value of a vaultVariable is the secret-id (in OCI ID format) stored in the OCI Vault service
   # you can then access the value of that secret in your build_spec.yaml commands
   vaultVariables:
@@ -61,7 +62,7 @@ steps:
     name: "Build container image"
     command: |
       cd ${OCI_PRIMARY_SOURCE_DIR}
-      docker build -t demo-hugo-site:latest -f Dockerfile .
+      docker build -t ${image_name:${tag} -f Dockerfile .
     onFailure:
       - type: Command
         command: |
