@@ -25,6 +25,7 @@ steps:
       export BUILDRUN_HASH=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-7`
       echo "BUILDRUN_HASH: " $BUILDRUN_HASH
       uname -a
+      cat /etc/passwd
       docker --version
       whoami
     onFailure:
@@ -40,6 +41,9 @@ steps:
     name: "Check env"
     timeoutInSeconds: 40
     command: |
+      uname -a
+      cat /etc/passwd
+      docker --version
       whoami
     onFailure:
       - type: Command
