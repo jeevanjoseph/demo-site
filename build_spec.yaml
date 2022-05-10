@@ -45,6 +45,8 @@ steps:
       cat /etc/passwd
       docker --version
       whoami
+      cat /proc/cpuinfo
+      cat /proc/meminfo
     onFailure:
       - type: Command
         timeoutInSeconds: 40
