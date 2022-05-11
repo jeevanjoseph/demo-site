@@ -73,9 +73,6 @@ steps:
 
 
 outputArtifacts:
-  - name: output01
+  - name: app_image
     type: DOCKER_IMAGE
-    # 
-    # this location tag doesn't effect the tag used to deliver the container image
-    # to the Container Registry
-    location: demo-hugo-site:latest
+    location: ${image_name}:${tag}
